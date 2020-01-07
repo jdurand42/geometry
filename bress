@@ -1,0 +1,78 @@
+procédure tracerCercle (entier rayon, entier x_centre, entier y_centre)
+	déclarer entier x, y, m ;
+	x ← 0 ;
+	y ← rayon ;             // on se place en haut du cercle
+	m ← 5 - 4*rayon ;       // initialisation
+	Tant que x <= y         // tant qu'on est dans le second octant
+		tracerPixel( x+x_centre, y+y_centre ) ;
+		tracerPixel( y+x_centre, x+y_centre ) ;
+		tracerPixel( -x+x_centre, y+y_centre ) ;
+		tracerPixel( -y+x_centre, x+y_centre ) ;
+		tracerPixel( x+x_centre, -y+y_centre ) ;
+		tracerPixel( y+x_centre, -x+y_centre ) ;
+		tracerPixel( -x+x_centre, -y+y_centre ) ;
+		tracerPixel( -y+x_centre, -x+y_centre ) ;
+		si m > 0 alors	//choix du point F
+			y ← y - 1 ;
+			m ← m - 8*y ;
+		fin si ;
+		x ← x + 1 ;
+		m ← m + 8*x + 4 ;
+	fin tant que ;
+fin de procédure ;
+void 	do_octant(int centerx, int centery, int x, int y, int m, char **tab)
+{
+	while (x <= y)
+	{
+		tab[y + centery][x + centerx] = '@';
+		tab[x + centery][y + centerx] = '@';
+		tab[y + centery][-x + centerx] = '@';
+		tab[x + centery][-y + centerx] = '@';
+		tab[-y + centery][x + centerx] = '@';
+		tab[-x + centery][y + centerx] = '@';
+		tab[-y + centery][-x + centerx] = '@';
+		tab[-x + centery][-y + centerx] = '@';
+		if (m > 0)
+		{
+			y -= 1;
+			m = m + 8 * y;
+		}
+		x += 1;
+		m = m + 8 * x + 4;
+	}
+}
+
+public static List<Point> BresenhamCircle(int xc,int yc,int r)
+{
+    List<Point> ret = new List<Point>();
+    int x,y,p;
+
+    x=0;
+    y=r;
+
+    ret.Add(new Point(xc+x,yc-y));
+
+    p=3-(2*r);
+
+    for(x=0;x<=y;x++)
+    {
+        if (p<0)
+        {
+            p=(p+(4*x)+6);
+        }
+        else
+        {
+            y-=1;
+            p+=((4*(x-y)+10));
+        }
+
+        ret.Add(new Point(xc+x,yc-y));
+        ret.Add(new Point(xc-x,yc-y));
+        ret.Add(new Point(xc+x,yc+y));
+        ret.Add(new Point(xc-x,yc+y));
+        ret.Add(new Point(xc+y,yc-x));
+        ret.Add(new Point(xc-y,yc-x));
+        ret.Add(new Point(xc+y,yc+x));
+        ret.Add(new Point(xc-y,yc+x));
+    }
+    return ret;
