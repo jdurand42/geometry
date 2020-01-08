@@ -6,7 +6,7 @@
 /*   By: jdurand <jdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 14:45:02 by jdurand           #+#    #+#             */
-/*   Updated: 2020/01/08 10:45:53 by jdurand          ###   ########.fr       */
+/*   Updated: 2020/01/08 12:44:53 by jdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 #include <stdio.h>
 #include <strings.h>
 #include <math.h>
-#define X_MAX 50
-#define Y_MAX 50
+#define X_MAX 100
+#define Y_MAX 100
 #define GREEN "\x1b[32m"
 #define RESET "\x1b[0m"
-#define RED "\033[34;01m"
+#define PURPLE "\033[34;01m"
+#define RED "\033[31m"
 #define RED_END "\033[00m"
+#define BLACK "\033[30m"
+#define BOLDRED "\033[1m\033[31m"
 
 
 void 	show_tab(char **tab)
@@ -29,9 +32,9 @@ void 	show_tab(char **tab)
 		for (int i = 0; i < X_MAX; i++)
 		{
 			if (tab[j][i] != '@')
-				printf("%c ", tab[j][i]);
+				printf(BLACK "%c " RESET, tab[j][i]);
 			else
-				printf(RED "%c " RED_END, tab[j][i]);
+				printf(BOLDRED "%c " RESET, tab[j][i]);
 		}
 		printf("\n");
 	}
