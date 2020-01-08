@@ -6,7 +6,7 @@
 /*   By: jdurand <jdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 14:45:02 by jdurand           #+#    #+#             */
-/*   Updated: 2020/01/07 19:19:57 by jdurand          ###   ########.fr       */
+/*   Updated: 2020/01/08 10:45:53 by jdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 #define Y_MAX 50
 #define GREEN "\x1b[32m"
 #define RESET "\x1b[0m"
+#define RED "\033[34;01m"
+#define RED_END "\033[00m"
 
 
 void 	show_tab(char **tab)
@@ -29,7 +31,7 @@ void 	show_tab(char **tab)
 			if (tab[j][i] != '@')
 				printf("%c ", tab[j][i]);
 			else
-				printf(GREEN "%c " RESET, tab[j][i]);
+				printf(RED "%c " RED_END, tab[j][i]);
 		}
 		printf("\n");
 	}
@@ -44,6 +46,12 @@ void 	ft_setup(char **tab)
 	}
 }
 
+void 	do_check_draw(char **tab, int x, int y)
+{
+	if (x > 0 && x < X_MAX && y > 0 && y < Y_MAX)
+		tab[y][x] = '@';
+}
+
 void 	do_octant(int centerx, int centery, int x, int y, int m, char **tab)
 {
 	while (x <= y)
@@ -55,23 +63,14 @@ void 	do_octant(int centerx, int centery, int x, int y, int m, char **tab)
 			y -= 1;
 			m += ((4 * (x - y) + 1));
 		}
-		if (y + centery < Y_MAX && x + centery < Y_MAX)
-		{
-			if (x + centerx < X_MAX && y + centerx < X_MAX)
-			{
-				tab[y + centery][x + centerx] = '@';
-				tab[x + centery][y + centerx] = '@';
-			}
-			if (-x + centerx > 0 && -y + centerx > 0)
-			{
-			//	tab[y + centery][-x + centerx] = '@';
-			//	tab[x + centery][-y + centerx] = '@';
-			}
-		}
-		tab[-y + centery][x + centerx] = '@';
-		tab[-x + centery][y + centerx] = '@';
-		tab[-y + centery][-x + centerx] = '@';
-		tab[-x + centery][-y + centerx] = '@';
+		do_check_draw(tab, x + centerx, y + centery);
+		do_check_draw(tab, y + centerx, x + centery);
+		do_check_draw(tab, -x + centerx, y + centery);
+		do_check_draw(tab, -y + centerx, x + centery);
+		do_check_draw(tab, x + centerx, -y + centery);
+		do_check_draw(tab, y + centerx, -x + centery);
+		do_check_draw(tab, -x + centerx, -y + centery);
+		do_check_draw(tab, -y + centerx, -x + centery);
 		x += 1;
 	}
 }
@@ -108,7 +107,7 @@ int	main(int ac, char **av)
 		tab[i] = malloc(X_MAX * sizeof(char));
 	ft_setup(tab);
 
-	if (ac != 4)
+	if (ac < 4)
 	{
 		printf("<exec> X_center Y_center ray\n");
 		return (0);
@@ -121,7 +120,7 @@ int	main(int ac, char **av)
 	y = ray;
 	m = 3 - 2 * ray;
 	do_octant(centerx, centery, x, y, m, tab);
-//	fill_circle(tab, centerx, centery, ray);
+	fill_circle(tab, centerx, centery, ray);
 	show_tab(tab);
 	return (0);
 }
