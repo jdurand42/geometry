@@ -14,8 +14,8 @@
 #include <stdio.h>
 #include <strings.h>
 #include <math.h>
-#define X_MAX 40
-#define Y_MAX 40
+#define X_MAX 100
+#define Y_MAX 100
 #define GREEN "\x1b[32m"
 #define RESET "\x1b[0m"
 #define PURPLE "\033[34;01m"
