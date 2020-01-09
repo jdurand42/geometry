@@ -81,12 +81,17 @@ void 	do_octant(int centerx, int centery, int x, int y, int m, char **tab)
 void 	fill_circle(char **tab, int centerx, int centery, int r)
 {
 	int x = 0; int y = 0;
+	double dist;
+	double rayon;
+
+	rayon = (double)r;
 
 	while (y < Y_MAX)
 	{
 		while (x < X_MAX)
 		{
-			if (sqrt(pow(x - centerx, 2) + pow(y - centery, 2)) < r)
+			dist = (((x - centerx) * (x - centerx)) + ((y - centery) * (y - centery)));
+			if (dist <= rayon * rayon)
 			{
 				tab[y][x] = '@';
 			}
@@ -96,6 +101,29 @@ void 	fill_circle(char **tab, int centerx, int centery, int r)
 		y++;
 	}
 }
+
+
+void	do_circle3(int cx, int cy, int r, char **tab)
+{
+	int x,y;
+	double hrw;
+	y = -r;
+	while (y <= r)
+	{
+		hrw = sqrt(r * r - y * y);
+		x = -hrw;
+		while (x <= hrw)
+		{
+			do_check_draw(tab, cx + x, cy + y);
+			x++;
+		}
+		y++;
+	}
+    //half_row_width=sqrt(radius*radius-y*y);
+    //for(x=-half_row_width; x< half_row_width; x++)
+     //   WritePixel(centre_x+x, centre_y+y, colour);
+}
+	
 
 int	main(int ac, char **av)
 {
@@ -122,9 +150,9 @@ int	main(int ac, char **av)
 	x = 0;
 	y = ray;
 	m = 3 - 2 * ray;
-	do_octant(centerx, centery, x, y, m, tab);
-	if (ac > 4)
-		fill_circle(tab, centerx, centery, ray);
+//	do_octant(centerx, centery, x, y, m, tab);
+//	fill_circle(tab, centerx, centery, ray);
+	do_circle3(centerx, centery, ray, tab);
 	show_tab(tab);
 	return (0);
 }
