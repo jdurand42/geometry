@@ -153,6 +153,11 @@ void 	draw_full(char **tab, int w, int h, double cx, double cy, double r, char c
 	}
 }
 
+double	get_dist(double dx, double dy)
+{
+	return (sqrt(powf(dx, 2) + powf(dy, 2)));
+}
+
 void 	draw_empty(char **tab, int w, int h, double cx, double cy, double r, char c)
 {
 	double distc;
@@ -163,9 +168,13 @@ void 	draw_empty(char **tab, int w, int h, double cx, double cy, double r, char 
 	{
 		while (x < w)
 		{
-			distc = sqrt(powf(x - cx, 2) + powf(y - cy, 2));
-			if (distc <= r + 1 && distc >= r)
-				tab[y][x] = c;
+			distc = get_dist(x - cx, y - cy);
+			if (distc <= r)
+			{
+				if (!(get_dist(x - 1 - cx, y - cy) <= r && get_dist(x + 1 - cx, y - cy) <= r 
+				&& get_dist(x - cx, y - 1 - cy) <= r && get_dist(x - cx, y + 1 - cy) <= r))
+					tab[y][x] = c;
+			} 
 			x++;
 		}
 		y++;
