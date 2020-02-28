@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cercle.c                                           :+:      :+:    :+:   */
+/*   cercle2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdurand <jdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 14:45:02 by jdurand           #+#    #+#             */
-/*   Updated: 2020/01/08 12:44:53 by jdurand          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:06:41 by jdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void 	fill_circle(char **tab, int centerx, int centery, int r)
 		while (x < X_MAX)
 		{
 			dist = (((x - centerx) * (x - centerx)) + ((y - centery) * (y - centery)));
-			if (dist <= rayon * rayon)
+			if (dist <= (int)(rayon * rayon + 1) && dist >= (int)(rayon * rayon))
 			{
 				tab[y][x] = '@';
 			}

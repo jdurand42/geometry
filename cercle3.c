@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cercle.c                                           :+:      :+:    :+:   */
+/*   cercle3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jdurand <jdurand@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/20 14:45:02 by jdurand           #+#    #+#             */
-/*   Updated: 2020/01/08 12:44:53 by jdurand          ###   ########.fr       */
+/*   Updated: 2020/01/09 20:11:03 by jdurand          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,18 +112,20 @@ void	do_circle3(int cx, int cy, int r, char **tab)
 	{
 		hrw = sqrt(r * r - y * y);
 		x = -hrw;
+		do_check_draw(tab, cx + x, cy + y);
 		while (x <= hrw)
 		{
-			do_check_draw(tab, cx + x, cy + y);
+		//	do_check_draw(tab, cx + x, cy + y);
 			x++;
 		}
+		do_check_draw(tab, cx + x, cy + y);
 		y++;
 	}
     //half_row_width=sqrt(radius*radius-y*y);
     //for(x=-half_row_width; x< half_row_width; x++)
      //   WritePixel(centre_x+x, centre_y+y, colour);
 }
-	
+
 
 int	main(int ac, char **av)
 {
